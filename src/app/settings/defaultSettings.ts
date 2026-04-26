@@ -1,14 +1,13 @@
 import { getDefaultHiddenProviderCommands } from '../../core/providers/commands/hiddenCommands';
 import { type ClaudianSettings } from '../../core/types/settings';
-import { DEFAULT_CLAUDE_PROVIDER_SETTINGS } from '../../providers/claude/settings';
-import { DEFAULT_CODEX_PROVIDER_SETTINGS } from '../../providers/codex/settings';
+import { DEFAULT_QWEN_SETTINGS } from '../../providers/qwen/settings';
 
 export const DEFAULT_CLAUDIAN_SETTINGS: ClaudianSettings = {
   userName: '',
 
   permissionMode: 'yolo',
 
-  model: 'haiku',
+  model: 'default',
   thinkingBudget: 'off',
   effortLevel: 'high',
   serviceTier: 'default',
@@ -33,11 +32,10 @@ export const DEFAULT_CLAUDIAN_SETTINGS: ClaudianSettings = {
   locale: 'en',
 
   providerConfigs: {
-    claude: { ...DEFAULT_CLAUDE_PROVIDER_SETTINGS },
-    codex: { ...DEFAULT_CODEX_PROVIDER_SETTINGS },
+    qwen: { ...DEFAULT_QWEN_SETTINGS },
   },
 
-  settingsProvider: 'claude',
+  settingsProvider: 'qwen',
   savedProviderModel: {},
   savedProviderEffort: {},
   savedProviderServiceTier: {},

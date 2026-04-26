@@ -6,11 +6,11 @@
 
 ![Preview](Preview.png)
 
-An Obsidian plugin that embeds AI coding agents (Claude Code, Codex, and more to come) in your vault. Your vault becomes the agent's working directory — file read/write, search, bash, and multi-step workflows all work out of the box.
+An Obsidian plugin that embeds Qwen Code AI coding agent in your vault. Your vault becomes the agent's working directory — file read/write, search, bash, and multi-step workflows all work out of the box.
 
 ## Features & Usage
 
-Open the chat sidebar from the ribbon icon or command palette. Select text and use the hotkey for inline edit. Everything works like Claude Code or Codex — talk to the agent, and it reads, writes, edits, and searches files in your vault.
+Open the chat sidebar from the ribbon icon or command palette. Select text and use the hotkey for inline edit. Everything works like Qwen Code — talk to the agent, and it reads, writes, edits, and searches files in your vault.
 
 **Inline Edit** — Select text or start at the cursor position + hotkey to edit directly in notes with word-level diff preview.
 
@@ -22,14 +22,13 @@ Open the chat sidebar from the ribbon icon or command palette. Select text and u
 
 **Instruction Mode (`#`)** — Refined custom instructions added from the chat input.
 
-**MCP Servers** — Connect external tools via Model Context Protocol (stdio, SSE, HTTP). Claude manages vault MCP in-app; Codex uses its own CLI-managed MCP configuration.
+**MCP Servers** — Connect external tools via Model Context Protocol (stdio, SSE, HTTP). Qwen manages vault MCP in-app using its own CLI-managed MCP configuration.
 
 **Multi-Tab & Conversations** — Multiple chat tabs, conversation history, fork, resume, and compact.
 
 ## Requirements
 
-- **Claude provider**: [Claude Code CLI](https://code.claude.com/docs/en/overview) installed (native install recommended). Claude subscription/API or compatible provider ([Openrouter](https://openrouter.ai/docs/guides/guides/claude-code-integration), [Kimi](https://platform.moonshot.ai/docs/guide/agent-support), etc.).
-- **Codex provider** (optional): [Codex CLI](https://github.com/openai/codex) installed.
+- **Qwen provider**: [Qwen Code CLI](https://github.com/QwenLM/qwen-code) installed (brew install qwen or npm install -g @qwen/cli recommended).
 - Obsidian v1.4.5+
 - Desktop only (macOS, Linux, Windows)
 
@@ -91,45 +90,38 @@ npm run build
 
 ## Privacy & Data Use
 
-- **Sent to API**: Your input, attached files, images, and tool call outputs. Default: Anthropic (Claude) or OpenAI (Codex); configurable via environment variables.
-- **Local storage**: Claudian settings and session metadata in `vault/.claudian/`; Claude provider files in `vault/.claude/`; transcripts in `~/.claude/projects/` (Claude) and `~/.codex/sessions/` (Codex).
+- **Sent to API**: Your input, attached files, images, and tool call outputs. Default: Alibaba Cloud (Qwen); configurable via Qwen CLI settings.
+- **Local storage**: Claudian settings and session metadata in `vault/.claudian/`; Qwen provider files in `vault/.qwen/`; transcripts in `~/.qwen/projects/`.
 - **No telemetry**: No tracking beyond your configured API provider.
 
 ## Troubleshooting
 
-### Claude CLI not found
+### Qwen CLI not found
 
-If you encounter `spawn claude ENOENT` or `Claude CLI not found`, the plugin can't auto-detect your Claude installation. Common with Node version managers (nvm, fnm, volta).
+If you encounter `spawn qwen ENOENT` or `Qwen CLI not found`, the plugin can't auto-detect your Qwen installation. Common with Node version managers (nvm, fnm, volta).
 
-**Solution**: Find your CLI path and set it in Settings → Advanced → Claude CLI path.
+**Solution**: Find your CLI path and set it in Settings → Qwen → Qwen CLI path.
 
 | Platform | Command | Example Path |
 |----------|---------|--------------|
-| macOS/Linux | `which claude` | `/Users/you/.volta/bin/claude` |
-| Windows (native) | `where.exe claude` | `C:\Users\you\AppData\Local\Claude\claude.exe` |
-| Windows (npm) | `npm root -g` | `{root}\@anthropic-ai\claude-code\cli.js` |
+| macOS/Linux | `which qwen` | `/opt/homebrew/bin/qwen` or `/Users/you/.volta/bin/qwen` |
+| Windows (native) | `where.exe qwen` | `C:\Users\you\AppData\Roaming\npm\qwen.exe` |
+| Windows (npm) | `npm root -g` | `{root}\@qwen\cli\bin\qwen.js` |
 
-> **Note**: On Windows, avoid `.cmd` wrappers. Use `claude.exe` or `cli.js`.
+> **Note**: On Windows, avoid `.cmd` wrappers. Use `qwen.exe` or `qwen.js`.
+
+### Node.js not found
+
+If you encounter `env: node not found` error, Obsidian can't find your Node.js installation.
+
+**Solution**: Find your Node.js path and set it in Settings → Qwen → Node.js path.
+
+| Platform | Command | Example Path |
+|----------|---------|--------------|
+| macOS/Linux | `which node` | `/opt/homebrew/bin/node` |
+| Windows | `where.exe node` | `C:\Program Files\nodejs\node.exe` |
 
 **Alternative**: Add your Node.js bin directory to PATH in Settings → Environment → Custom variables.
-
-### npm CLI and Node.js not in same directory
-
-If using npm-installed CLI, check if `claude` and `node` are in the same directory:
-```bash
-dirname $(which claude)
-dirname $(which node)
-```
-
-If different, GUI apps like Obsidian may not find Node.js.
-
-**Solutions**:
-1. Install native binary (recommended)
-2. Add Node.js path to Settings → Environment: `PATH=/path/to/node/bin`
-
-### Codex provider
-
-Codex support is live but still needs more testing across platforms and installation methods. If you run into any bugs, please [submit a GitHub issue](https://github.com/YishenTu/claudian/issues).
 
 ## Architecture
 
@@ -143,8 +135,7 @@ src/
 │   ├── security/                # Approval utilities
 │   └── ...                      # commands, mcp, prompt, storage, tools, types
 ├── providers/
-│   ├── claude/                  # Claude SDK adaptor, prompt encoding, storage, MCP, plugins
-│   └── codex/                   # Codex app-server adaptor, JSON-RPC transport, JSONL history
+│   └── qwen/                    # Qwen Code SDK adaptor, prompt encoding, storage, MCP, plugins
 ├── features/
 │   ├── chat/                    # Sidebar chat: tabs, controllers, renderers
 │   ├── inline-edit/             # Inline edit modal and provider-backed edit services
@@ -157,9 +148,10 @@ src/
 
 ## Roadmap
 
-- [x] 1M Opus and Sonnet models
-- [x] Codex provider integration
-- [ ] More to come!
+- [x] Qwen Code provider full integration
+- [x] Custom Node.js path configuration
+- [ ] More model support
+- [ ] More features to come!
 
 ## License
 
@@ -178,5 +170,4 @@ Licensed under the [MIT License](LICENSE).
 ## Acknowledgments
 
 - [Obsidian](https://obsidian.md) for the plugin API
-- [Anthropic](https://anthropic.com) for Claude and the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview)
-- [OpenAI](https://openai.com) for [Codex](https://github.com/openai/codex)
+- [Alibaba Cloud Qwen](https://tongyi.aliyun.com/qwen) for Qwen Code and the [Qwen Agent SDK](https://github.com/QwenLM/qwen-code)

@@ -1,9 +1,7 @@
 import { ProviderRegistry } from '../core/providers/ProviderRegistry';
 import { ProviderWorkspaceRegistry } from '../core/providers/ProviderWorkspaceRegistry';
-import { claudeWorkspaceRegistration } from './claude/app/ClaudeWorkspaceServices';
-import { claudeProviderRegistration } from './claude/registration';
-import { codexWorkspaceRegistration } from './codex/app/CodexWorkspaceServices';
-import { codexProviderRegistration } from './codex/registration';
+import { qwenWorkspaceRegistration } from './qwen/app/QwenWorkspaceServices';
+import { qwenProviderRegistration } from './qwen/registration';
 
 let builtInProvidersRegistered = false;
 
@@ -12,10 +10,8 @@ export function registerBuiltInProviders(): void {
     return;
   }
 
-  ProviderRegistry.register('claude', claudeProviderRegistration);
-  ProviderRegistry.register('codex', codexProviderRegistration);
-  ProviderWorkspaceRegistry.register('claude', claudeWorkspaceRegistration);
-  ProviderWorkspaceRegistry.register('codex', codexWorkspaceRegistration);
+  ProviderRegistry.register('qwen', qwenProviderRegistration);
+  ProviderWorkspaceRegistry.register('qwen', qwenWorkspaceRegistration);
   builtInProvidersRegistered = true;
 }
 
